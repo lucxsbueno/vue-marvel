@@ -1,12 +1,22 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+  <div id="app" class="app">
+    <app-logo/>
+    <app-menu/>
     <router-view/>
   </div>
 </template>
+
+<script>
+import Logo from "@/components/Logo.vue";
+import Menu from "@/components/Menu.vue";
+
+export default {
+  name: "App",
+  components: {
+    "app-logo": Logo,
+    "app-menu": Menu
+  }
+}</script>
 
 <style lang="scss">
 
