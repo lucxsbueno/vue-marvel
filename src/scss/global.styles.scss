@@ -24,31 +24,6 @@
   margin: 0px 20px;
 }
 
-.grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(317px, auto));
-  grid-gap: 4px;
-
-  & > div{
-    background-color: var(--grey-02); 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    height: 350px;
-
-    transition: all .2s ease-in-out;
-
-    cursor: pointer;
-
-    &:hover {
-      transform: scale(1.1);
-
-      background: linear-gradient(315deg, transparent 5%, var(--white-01) 5%);
-    }
-  }
-}
-
 /* General styles */
 .cite {
   color: var(--white-01);
