@@ -21,15 +21,15 @@ export default {
 input {
   width: 320px;
   height: 60px;
-  
+
   background: linear-gradient(135deg, transparent 5%, var(--grey-02) 5%);
-  
+
   border: none;
   outline: none;
-  
+
   color: var(--white-01);
   font-size: 16px;
-  
+
   padding: 0px 25px;
 
   margin-right: 4px;
@@ -42,24 +42,24 @@ input {
 /* Button */
 button {
   height: 60px;
-  
+
   background: linear-gradient(315deg, transparent 10%, var(--white-01) 10%);
-  
+
   border: none;
   outline: none;
-  
+
   color: var(--grey-02);
   font-size: 16px;
   font-weight: 600;
-  
+
   padding: 0px 25px;
   letter-spacing: 2px;
-  
+
   cursor: pointer;
 
   &:hover {
     background: linear-gradient(315deg, transparent 10%, var(--red) 10%);
-    
+
     color: var(--white-01);
   }
 }

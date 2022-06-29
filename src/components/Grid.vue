@@ -5,7 +5,7 @@
         <div class="grid">
 
           <!-- GRID ITEM -->
-          <div class="grid-item" v-for="item in items">
+          <div class="grid-item" v-for="item in items" v-bind:key="item.id">
 
             <div class="grid-item-image">
               <img v-bind:src="item.image" alt="">
@@ -79,7 +79,7 @@ export default {
 <style lang="scss" scoped>
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(317px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(252px, auto));
   grid-gap: 4px;
 
   & > .grid-item {
@@ -100,17 +100,17 @@ export default {
     }
 
     .grid-item-title {
-      padding: 20px;
+      padding: 10px;
 
       span {
         display: block;
 
         font-family: "Roboto";
         font-weight: 900;
-        font-size: 30px;
+        font-size: 20px;
         line-height: 35px;
         letter-spacing: 0.2em;
-        text-transform: uppercase;  
+        text-transform: uppercase;
         text-align: center;
 
         color: var(--white-01);
@@ -122,7 +122,7 @@ export default {
 
       background: var(--white-01);
 
-      padding: 20px;
+      padding: 10px;
 
       &>.grid-item-title {
 
