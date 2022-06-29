@@ -15,6 +15,11 @@
               <span>{{ item.name }}</span>
             </div>
 
+            <div class="grid-item-buttons">
+              <app-button name="READ MORE" type="simple" width="160px" />
+              <app-rounded-button type="simple" />
+            </div>
+
           </div>
           <!-- END GRID ITEM -->
 
@@ -25,8 +30,15 @@
 </template>
 
 <script>
+import Button from "@/components/Button.vue";
+import RoundedButton from "@/components/RoundedButton.vue";
+
 export default {
   name: "Grid",
+  components: {
+    "app-button": Button,
+    "app-rounded-button": RoundedButton,
+  },
   data: function() {
     return {
       items: [
@@ -117,12 +129,22 @@ export default {
       }
     }
 
+    .grid-item-buttons {
+      display: none;
+    }
+
     &:hover {
       transform: scale(1.2);
 
       background: var(--white-01);
 
       padding: 10px;
+
+      .grid-item-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
 
       &>.grid-item-title {
 
