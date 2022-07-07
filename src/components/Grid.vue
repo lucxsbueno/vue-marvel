@@ -5,14 +5,14 @@
         <div class="grid">
 
           <!-- GRID ITEM -->
-          <div class="grid-item" v-for="item in items" v-bind:key="item.id">
+          <div class="grid-item" v-for="character in characters" v-bind:key="character.id">
 
             <div class="grid-item-image">
-              <img v-bind:src="item.image" alt="">
+              <img v-bind:src="character.thumbnail.path+'/standard_fantastic.'+character.thumbnail.extension" alt="">
             </div>
 
             <div class="grid-item-title">
-              <span>{{ item.name }}</span>
+              <span>{{ character.name }}</span>
             </div>
 
             <div class="grid-item-buttons">
@@ -33,56 +33,33 @@
 import Button from "@/components/Button.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 
+//Http
+import axios from "axios";
+
 export default {
   name: "Grid",
   components: {
     "app-button": Button,
     "app-rounded-button": RoundedButton,
   },
+  mounted() {
+    this.fetchCharacters();
+  },
   data: function() {
     return {
-      items: [
-        {
-          id: 0,
-          name: "A-BOMB",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 1,
-          name: "THOR",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 2,
-          name: "HULK",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 3,
-          name: "SPIDER-MAN",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 4,
-          name: "A-BOMB",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 5,
-          name: "THOR",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 6,
-          name: "HULK",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        },
-        {
-          id: 7,
-          name: "SPIDER-MAN",
-          image: "https://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/standard_incredible.jpg"
-        }
-      ]
+      characters: []
+    }
+  },
+  methods: {
+    fetchCharacters: function() {
+      axios.get(`http://gateway.marvel.com/v1/public/characters?ts=${process.env.VUE_APP_TIMESTAMP}&apikey=${process.env.VUE_APP_PUBLIC_API_KEY}&hash=${process.env.VUE_APP_HASH_API_KEY}`)
+        .then(result => {
+          console.log(result);
+          result.data.data.results.forEach(item => {
+            this.characters.push(item);
+          })
+        })
+        .catch(error => console.log(error));
     }
   }
 }
