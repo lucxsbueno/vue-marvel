@@ -8,7 +8,7 @@
           <div class="grid-item" v-for="character in characters" v-bind:key="character.id">
 
             <div class="grid-item-image">
-              <img v-bind:src="character.thumbnail.path+'/standard_fantastic.'+character.thumbnail.extension" alt="">
+              <img v-bind:src="character.thumbnail.path + '/portrait_uncanny.' + character.thumbnail.extension" alt="" style="{backgroundColor: white}">
             </div>
 
             <div class="grid-item-title">
@@ -16,8 +16,10 @@
             </div>
 
             <div class="grid-item-buttons">
-              <app-button name="READ MORE" type="simple" width="160px" />
-              <app-rounded-button type="simple" />
+              <app-button name="READ MORE" type="simple" />
+              <div v-bind:style="{display: 'block', width: '60px', paddingLeft: '10px'}">
+                <app-rounded-button type="simple" />
+              </div>
             </div>
 
           </div>
@@ -45,13 +47,13 @@ export default {
   mounted() {
     this.fetchCharacters();
   },
-  data: function() {
+  data: function () {
     return {
       characters: []
     }
   },
   methods: {
-    fetchCharacters: function() {
+    fetchCharacters: function () {
       axios.get(`http://gateway.marvel.com/v1/public/characters?ts=${process.env.VUE_APP_TIMESTAMP}&apikey=${process.env.VUE_APP_PUBLIC_API_KEY}&hash=${process.env.VUE_APP_HASH_API_KEY}`)
         .then(result => {
           console.log(result);
@@ -71,7 +73,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(252px, auto));
   grid-gap: 4px;
 
-  & > .grid-item {
+  &>.grid-item {
     color: var(--white-01);
 
     transition: all .2s ease-in-out;
@@ -85,6 +87,8 @@ export default {
       img {
         width: 100%;
         height: 100%;
+
+        background-color: #FFF;
       }
     }
 
@@ -96,11 +100,16 @@ export default {
 
         font-family: "Roboto";
         font-weight: 900;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 35px;
         letter-spacing: 0.2em;
         text-transform: uppercase;
         text-align: center;
+
+        max-width: 210px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         color: var(--white-01);
       }
@@ -120,7 +129,6 @@ export default {
       .grid-item-buttons {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
       }
 
       &>.grid-item-title {

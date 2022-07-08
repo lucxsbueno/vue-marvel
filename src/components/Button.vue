@@ -1,5 +1,5 @@
 <template>
-  <button v-bind:class="type" v-bind:style="{width: width }">{{ name }}</button>
+  <button v-bind:class="type">{{ name }}</button>
 </template>
 
 <script>
@@ -7,8 +7,7 @@ export default {
   name: "Button",
   props: {
     name: String,
-    type: String,
-    width: String
+    type: String
   }
 }
 </script>
@@ -16,7 +15,7 @@ export default {
 <style lang="scss" scoped>
 button {
   width: 100%;
-  height: 60px;
+  height: 50px;
 
   font-family: "Roboto";
   font-weight: 700;
