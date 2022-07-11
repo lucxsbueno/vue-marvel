@@ -1,15 +1,25 @@
 <template>
   <header class="header flex-center">
     <div class="mt-3">
-      <input type="text" placeholder="Enter your favorite hero" />
-      <button>SEARCH</button>
+      <input type="text" placeholder="Enter your favorite hero" v-model="search" />
+      <button v-on:click="searchCharacter()">SEARCH</button>
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data: function() {
+    return{
+      search: ""
+    }
+  },
+  methods: {
+    searchCharacter() {
+      this.$store.dispatch("fetchCharacterByName", this.search);
+    }
+  }
 }
 </script>
 

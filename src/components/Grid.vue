@@ -2,13 +2,18 @@
   <div class="container flex-center mt-5 mb-5">
     <div class="row">
       <div class="column-12">
+        <div v-if="!characters.length" class="cite mt-3 mb-5 flex-center">
+          <p>Nenhum herói encontrado.</p>
+        </div>
+
         <div class="grid">
 
           <!-- GRID ITEM -->
           <div class="grid-item" v-for="character in characters" v-bind:key="character.id">
 
             <div class="grid-item-image">
-              <img v-bind:src="character.thumbnail.path + '/portrait_uncanny.' + character.thumbnail.extension" alt="" style="{backgroundColor: white}">
+              <img v-bind:src="character.thumbnail.path + '/portrait_uncanny.' + character.thumbnail.extension" alt=""
+                style="{backgroundColor: white}">
             </div>
 
             <div class="grid-item-title">
@@ -16,9 +21,21 @@
             </div>
 
             <div class="grid-item-buttons">
-              <app-button name="READ MORE" type="simple" />
-              <div v-bind:style="{display: 'block', width: '60px', paddingLeft: '10px'}">
-                <app-rounded-button type="simple" />
+              <router-link class="read-more default"
+                v-bind:to="{name: 'character', params: { id: character.id } }">
+                  READ MORE
+              </router-link>
+
+              <div class="button-wrapper" v-if="add">
+                <button class="grid-button rounded" v-on:click="addFavorite(character)">
+                  <star-icon />
+                </button>
+              </div>
+
+              <div class="button-wrapper" v-else>
+                <button class="grid-button rounded" v-on:click="removeFavorite(character)">
+                  <trash-icon />
+                </button>
               </div>
             </div>
 
@@ -32,36 +49,27 @@
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
-
-//Http
-import axios from "axios";
+//icons
+import StarIcon from "vue-feather-icons/icons/StarIcon";
+import TrashIcon from "vue-feather-icons/icons/TrashIcon";
 
 export default {
   name: "Grid",
   components: {
-    "app-button": Button,
-    "app-rounded-button": RoundedButton,
+    "star-icon": StarIcon,
+    "trash-icon": TrashIcon
   },
-  mounted() {
-    this.fetchCharacters();
-  },
-  data: function () {
-    return {
-      characters: []
-    }
+  props: {
+    characters: Array,
+    add: Boolean,
+    remove: Boolean
   },
   methods: {
-    fetchCharacters: function () {
-      axios.get(`http://gateway.marvel.com/v1/public/characters?ts=${process.env.VUE_APP_TIMESTAMP}&apikey=${process.env.VUE_APP_PUBLIC_API_KEY}&hash=${process.env.VUE_APP_HASH_API_KEY}`)
-        .then(result => {
-          console.log(result);
-          result.data.data.results.forEach(item => {
-            this.characters.push(item);
-          })
-        })
-        .catch(error => console.log(error));
+    addFavorite(character) {
+      this.$store.dispatch("addFavorite", character);
+    },
+    removeFavorite(character) {
+      this.$store.dispatch("removeFavorite", character);
     }
   }
 }
@@ -138,6 +146,68 @@ export default {
         }
       }
     }
+  }
+}
+
+.button-wrapper {
+  display: block;
+  width: 60px;
+  padding-left: 10px;
+}
+
+.read-more {
+  width: 100%;
+  height: 50px;
+
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.2em;
+
+  border: none;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.default {
+  color: var(--grey-02);
+  background: linear-gradient(315deg, transparent 7%, var(--color-simple) 7%);
+
+  &:hover {
+    color: var(--white-01);
+    background: linear-gradient(315deg, transparent 7%, var(--grey-02) 7%);
+  }
+}
+
+.grid-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.rounded {
+  color: var(--grey-02);
+  background: var(--color-simple);
+
+  &:hover {
+    color: var(--white-01);
+    background: var(--grey-02);
   }
 }
 </style>
